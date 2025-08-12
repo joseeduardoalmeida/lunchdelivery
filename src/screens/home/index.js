@@ -35,56 +35,27 @@ import axios from "axios";
 import { Controller, useForm } from "react-hook-form";
 import { getManufacturer } from "../../components/DeviceInfo";
 import useThemeStore from "../../components/themeStore";
+import { WebView } from 'react-native-webview';
 
 const HomeScreen = ({ navigation }) => {
 
-const [kotlin, setKotlin] = useState("");
-const [swift, setSwift] = useState("");
+    const [kotlin, setKotlin] = useState("");
+    const [swift, setSwift] = useState("");
 
-useEffect(() => {
-    getManufacturer().then(setKotlin);
-}, []);
+    useEffect(() => {
+        getManufacturer().then(setKotlin);
+    }, []);
 
-const { theme, toggleTheme } = useThemeStore();
+    const { theme, toggleTheme } = useThemeStore();
 
-const isDark = theme === 'dark';
+    const isDark = theme === 'dark';
+
+    // return <WebView source={{ uri: 'https://lanchonetedoedinho.com.br/' }} style={{ flex: 1 }} />;
 
     return (
         <View>
             <ScrollView w="100%">
-                <Stack space={2.5} alignSelf="center" px="4" safeArea mt="4" w={{
-                    base: "100%",
-                    md: "25%"
-                }}>
-                    <Box>
-                        <Text bold fontSize="xl" mb="4">
-                            Teste técnico
-                        </Text>
-                        <FormControl mb="5">
-                            <FormControl.Label>Informação do fabricante</FormControl.Label>
-                            <Input
-                                isDisabled
-                                value={Platform.OS === "ios" ? swift : kotlin}
-                            />
-                        </FormControl>
-                        <Divider />
-                    </Box>
-
-                    <Box>
-                         <FormControl mb="5">
-                            <FormControl.Label>Tema atual</FormControl.Label>
-                            <Input
-                                isDisabled
-                                value={theme.toUpperCase()}
-                            />
-                        </FormControl>
-                    </Box>
-
-                    
-                    <Box>
-                        <Button onPress={toggleTheme} >Alterar tema </Button>
-                    </Box>
-                </Stack>
+                
             </ScrollView>
         </View>
     );
