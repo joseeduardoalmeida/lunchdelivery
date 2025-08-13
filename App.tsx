@@ -7,6 +7,9 @@ import LoginScreen from './src/screens/login';
 import HomeScreen from './src/screens/home';
 import { NativeBaseProvider } from 'native-base';
 
+// import { enableScreens } from 'react-native-screens';
+// enableScreens();
+
 export type RootStackParamList = {
   Login: undefined;
   Home: undefined;
