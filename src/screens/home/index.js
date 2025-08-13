@@ -28,13 +28,23 @@ const HomeScreen = ({ navigation }) => {
         {/* CONTEÚDO (WEBVIEW) */}
         <WebView
           source={{ uri: "https://lanchonetedoedinho.com.br/" }}
-          style={styles.webview}
+          style={{ flex: 1 }}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+          originWhitelist={["*"]}
+          setSupportMultipleWindows={false} // impede abrir nova janela
+          onShouldStartLoadWithRequest={(request) => {
+            if (request.url.startsWith("http")) {
+              return true;
+            }
+            return false;
+          }}
         />
 
         {/* FOOTER */}
         <View style={styles.footer}>
-          <Button size="sm" onPress={() => navigation.navigate("OutraTela")}>
-            Ir para outra tela
+          <Button size="sm" onPress={() => navigation.navigate("Home")}>
+            Voltar
           </Button>
         </View>
       </View>
