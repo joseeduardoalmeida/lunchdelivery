@@ -1,34 +1,56 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { AuthProvider } from './src/settings/AuthContext';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Toast from "react-native-toast-message";
+import TooltipProvider from "./src/components/ui/tooltip"; // adapte para RN
 
-import LoginScreen from './src/screens/login';
-import HomeScreen from './src/screens/home';
-import { NativeBaseProvider } from 'native-base';
+import { useAuthRedirectHandler } from "./src/hooks/useAuthRedirectHandler";
+import { AdminInterface } from "./pages/AdminInterface";
+import { AdminLoginPage } from "./pages/AdminLogin";
+import { CustomerInterface } from "./pages/CustomerInterface";
+import { CustomerProfile } from "./pages/CustomerProfile";
+import { PasswordReset } from "./pages/PasswordReset";
+import { AuthCallback } from "./pages/AuthCallback";
+import NotFound from "./pages/NotFound";
+import { DeliveryPage } from "./pages/DeliveryPage";
+import { DeliveryManagement } from "./pages/DeliveryManagement";
+import { DeliverySystem } from "./pages/DeliverySystem";
+import { OrderSuccess } from "./pages/OrderSuccess";
 
-// import { enableScreens } from 'react-native-screens';
-// enableScreens();
+const Stack = createNativeStackNavigator();
+const queryClient = new QueryClient();
 
-export type RootStackParamList = {
-  Login: undefined;
-  Home: undefined;
+const AppRoutes = () => {
+  useAuthRedirectHandler();
+
+  return (
+    <Stack.Navigator initialRouteName="CustomerInterface" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="CustomerInterface" component={CustomerInterface} />
+      <Stack.Screen name="CustomerProfile" component={CustomerProfile} />
+      <Stack.Screen name="PasswordReset" component={PasswordReset} />
+      <Stack.Screen name="AuthCallback" component={AuthCallback} />
+      <Stack.Screen name="AdminLoginPage" component={AdminLoginPage} />
+      <Stack.Screen name="AdminInterface" component={AdminInterface} />
+      <Stack.Screen name="DeliveryPage" component={DeliveryPage} />
+      <Stack.Screen name="DeliveryManagement" component={DeliveryManagement} />
+      <Stack.Screen name="DeliverySystem" component={DeliverySystem} />
+      <Stack.Screen name="OrderSuccess" component={OrderSuccess} />
+      <Stack.Screen name="NotFound" component={NotFound} />
+    </Stack.Navigator>
+  );
 };
-
-const Stack = createStackNavigator<RootStackParamList>();
 
 const App = () => {
   return (
-    <AuthProvider>
-      <NativeBaseProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {/* <Stack.Screen name="Login" component={LoginScreen} /> */}
-            <Stack.Screen name="Home" component={HomeScreen} />
-          </Stack.Navigator>
+          <AppRoutes />
         </NavigationContainer>
-      </NativeBaseProvider>
-    </AuthProvider>
+        <Toast />
+      </TooltipProvider>
+    </QueryClientProvider>
   );
 };
 

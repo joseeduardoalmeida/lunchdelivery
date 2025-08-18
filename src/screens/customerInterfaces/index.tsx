@@ -3,11 +3,11 @@ import { View, ScrollView, StyleSheet } from 'react-native';
 import { useCustomerInterface } from '../../hooks/useCustomerInterface';
 import { MenuHeader } from '../../components/customer/MenuHeader';
 import { MenuSection } from '../../components/customer/MenuSection';
-import { LoadingScreen } from '@/components/customer/LoadingScreen';
-import { ProfileNavButton } from '@/components/common/ProfileNavButton';
-import { CustomerTestimonialsSection } from '@/components/customer/CustomerTestimonialsSection';
-import { WeeklyWinnerSection } from '@/components/customer/WeeklyWinnerSection';
-import { Footer } from '@/components/common/Footer';
+import { LoadingScreen } from '../../components/customer/LoadingScreen';
+import { ProfileNavButton } from '../../components/common/ProfileNavButton';
+import { CustomerTestimonialsSection } from '../../components/customer/CustomerTestimonialsSection';
+import { WeeklyWinnerSection } from '../../components/customer/WeeklyWinnerSection';
+import { Footer } from '../../components/common/Footer';
 
 export const CustomerInterface = () => {
   const {
