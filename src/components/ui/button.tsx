@@ -1,59 +1,106 @@
-// // Button.tsx
-// import React from "react";
-// import { Pressable, Text, PressableProps } from "react-native";
-// import { cva, type VariantProps } from "class-variance-authority";
-// import { cn } from "@/lib/utils"; // ajuste se necessário
+import React from "react";
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ViewStyle,
+  TextStyle,
+  GestureResponderEvent,
+} from "react-native";
 
-// // Definindo as variantes usando CVA adaptado para NativeWind
-// const buttonVariants = cva(
-//   "flex-row items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none",
-//   {
-//     variants: {
-//       variant: {
-//         default: "bg-blue-500 text-white",
-//         destructive: "bg-red-500 text-white",
-//         outline: "border border-gray-300 bg-transparent",
-//         secondary: "bg-gray-200 text-black",
-//         ghost: "bg-transparent",
-//         link: "bg-transparent underline text-blue-500",
-//       },
-//       size: {
-//         default: "h-10 px-4",
-//         sm: "h-9 px-3",
-//         lg: "h-11 px-8",
-//         icon: "h-10 w-10",
-//       },
-//     },
-//     defaultVariants: {
-//       variant: "default",
-//       size: "default",
-//     },
-//   }
-// );
+type Variant = "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+type Size = "default" | "sm" | "lg" | "icon";
 
-// export interface ButtonProps
-//   extends PressableProps,
-//     VariantProps<typeof buttonVariants> {
-//   children: React.ReactNode;
-// }
+interface ButtonProps {
+  variant?: Variant;
+  size?: Size;
+  onPress?: (event: GestureResponderEvent) => void;
+  disabled?: boolean;
+  children: React.ReactNode;
+  style?: ViewStyle;
+  textStyle?: TextStyle;
+}
 
-// export const Button = ({
-//   variant,
-//   size,
-//   children,
-//   className,
-//   ...props
-// }: ButtonProps) => {
-//   return (
-//     <Pressable
-//       className={cn(buttonVariants({ variant, size, className }))}
-//       {...props}
-//     >
-//       {typeof children === "string" ? (
-//         <Text className="text-white">{children}</Text>
-//       ) : (
-//         children
-//       )}
-//     </Pressable>
-//   );
-// };
+export const Button: React.FC<ButtonProps> = ({
+  variant = "default",
+  size = "default",
+  onPress,
+  disabled,
+  children,
+  style,
+  textStyle,
+}) => {
+  const buttonStyles = [
+    styles.base,
+    variantStyles[variant],
+    sizeStyles[size],
+    disabled ? styles.disabled : null,
+    style,
+  ];
+
+  const textStyles = [
+    styles.textBase,
+    textVariantStyles[variant],
+    textStyle,
+  ];
+
+  return (
+    <TouchableOpacity
+      style={buttonStyles}
+      onPress={onPress}
+      disabled={disabled}
+      activeOpacity={0.7}
+    >
+      {typeof children === "string" ? (
+        <Text style={textStyles}>{children}</Text>
+      ) : (
+        children
+      )}
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
+  base: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 8,
+  },
+  textBase: {
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  disabled: {
+    opacity: 0.5,
+  },
+});
+
+const variantStyles: Record<Variant, ViewStyle> = {
+  default: { backgroundColor: "#2563eb" }, // azul
+  destructive: { backgroundColor: "#dc2626" }, // vermelho
+  outline: {
+    backgroundColor: "transparent",
+    borderWidth: 1,
+    borderColor: "#d1d5db",
+  },
+  secondary: { backgroundColor: "#e5e7eb" },
+  ghost: { backgroundColor: "transparent" },
+  link: { backgroundColor: "transparent" },
+};
+
+const textVariantStyles: Record<Variant, TextStyle> = {
+  default: { color: "#fff" },
+  destructive: { color: "#fff" },
+  outline: { color: "#111827" },
+  secondary: { color: "#111827" },
+  ghost: { color: "#111827" },
+  link: { color: "#2563eb", textDecorationLine: "underline" },
+};
+
+const sizeStyles: Record<Size, ViewStyle> = {
+  default: { paddingHorizontal: 16, paddingVertical: 10, height: 40 },
+  sm: { paddingHorizontal: 12, paddingVertical: 8, height: 36, borderRadius: 6 },
+  lg: { paddingHorizontal: 20, paddingVertical: 12, height: 44, borderRadius: 10 },
+  icon: { width: 40, height: 40, justifyContent: "center", alignItems: "center" },
+};
