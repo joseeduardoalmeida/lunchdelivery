@@ -33,6 +33,7 @@ interface DeliveryOrder {
 
 interface PrintOrderButtonProps {
     order: Order | DeliveryOrder;
+    isDeliveryOrder?: boolean;
 }
 
 export const PrintOrderButton = ({ order }: PrintOrderButtonProps) => {

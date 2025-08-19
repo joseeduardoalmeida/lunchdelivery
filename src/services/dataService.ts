@@ -336,4 +336,13 @@ export const dataService = {
             throw error;
         }
     },
+
+    async updateOrderStatus(orderId: string, status: 'preparing' | 'out_for_delivery' | 'completed'): Promise<void> {
+    const { error } = await supabase
+      .from('orders')
+      .update({ status })
+      .eq('id', orderId);
+
+    if (error) throw error;
+  },
 };

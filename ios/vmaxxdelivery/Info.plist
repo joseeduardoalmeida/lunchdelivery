@@ -23,6 +23,13 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
+	<key>NSCameraUsageDescription</key>
+	<string>Este aplicativo precisa acessar a câmera.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Este aplicativo precisa acessar suas fotos.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Este aplicativo precisa acessar o microfone.</string>
+
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
