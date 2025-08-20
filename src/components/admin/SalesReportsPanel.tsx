@@ -8,10 +8,11 @@ import {
   ActivityIndicator,
   StyleSheet,
   ScrollView,
+  Alert
 } from "react-native";
 import { Calendar, DollarSign, TrendingUp, Clock, Download } from "lucide-react-native";
 import { dataService } from "../../services/dataService";
-import { salesReportService } from "@/services/salesReportService";
+import { salesReportService } from "../../services/salesReportService";
 import { Order } from "../../types";
 import {
   format,
@@ -126,9 +127,10 @@ export const SalesReportsPanel = () => {
     setIsDownloading(true);
     try {
       await salesReportService.downloadWeeklyReport();
-      alert("Relatório semanal baixado com sucesso!");
+      Alert.alert("Sucesso", "Relatório semanal baixado com sucesso!");
+
     } catch (error) {
-      alert("Erro ao baixar relatório semanal.");
+      Alert.alert("Erro","Erro ao baixar relatório semanal.");
     } finally {
       setIsDownloading(false);
     }
@@ -138,9 +140,10 @@ export const SalesReportsPanel = () => {
     setIsDownloading(true);
     try {
       await salesReportService.downloadMonthlyReport();
-      alert("Relatório mensal baixado com sucesso!");
+      Alert.alert("Sucesso", "Relatório mensal baixado com sucesso!");
+
     } catch (error) {
-      alert("Erro ao baixar relatório mensal.");
+      Alert.alert("Erro","Erro ao baixar relatório mensal.");
     } finally {
       setIsDownloading(false);
     }

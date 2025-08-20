@@ -2,7 +2,7 @@ import { Order } from '../types';
 import { unifiedOrderService } from './unifiedOrderService';
 import { format, startOfWeek, endOfWeek, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { generateCSV, CSVRow } from '@/utils/csvUtils';
+import { generateCSV, CSVRow } from '../utils/csvUtils';
 import RNFS from 'react-native-fs';
 import Share from 'react-native-share';
 
