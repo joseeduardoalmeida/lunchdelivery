@@ -1,7 +1,28 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import { LogOut, ShoppingCart, Menu as MenuIcon, BarChart3, Gift, Settings, TrendingUp } from 'lucide-react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
+import {
+  TabView,
+  SceneMap,
+  TabBar,
+  Route,
+} from 'react-native-tab-view';
+
+import type { LucideIcon } from 'lucide-react-native';
+import {
+  LogOut,
+  ShoppingCart,
+  Menu as MenuIcon,
+  BarChart3,
+  Gift,
+  Settings,
+  TrendingUp,
+} from 'lucide-react-native';
 
 import { OrdersPanel } from './OrdersPanel';
 import { MenuPanel } from './MenuPanel';
@@ -16,16 +37,22 @@ interface AdminDashboardProps {
   onLogout: () => void;
 }
 
-export const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    { key: 'orders', title: 'Pedidos', icon: ShoppingCart },
-    { key: 'menu', title: 'Cardápio', icon: MenuIcon },
-    { key: 'combos', title: 'Combos', icon: Gift },
-    { key: 'deliveryStats', title: 'Estatísticas', icon: TrendingUp },
-    { key: 'raffle', title: 'Sorteio', icon: Gift },
-    { key: 'reports', title: 'Relatórios', icon: BarChart3 },
-    { key: 'settings', title: 'Configurações', icon: Settings },
+// Rota customizada
+interface DashboardRoute extends Route {
+  title: string;
+  tabIcon: LucideIcon;
+}
+
+export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
+  const [index, setIndex] = useState<number>(0);
+  const [routes] = useState<DashboardRoute[]>([
+    { key: 'orders', title: 'Pedidos', tabIcon: ShoppingCart },
+    { key: 'menu', title: 'Cardápio', tabIcon: MenuIcon },
+    { key: 'combos', title: 'Combos', tabIcon: Gift },
+    { key: 'deliveryStats', title: 'Estatísticas', tabIcon: TrendingUp },
+    { key: 'raffle', title: 'Sorteio', tabIcon: Gift },
+    { key: 'reports', title: 'Relatórios', tabIcon: BarChart3 },
+    { key: 'settings', title: 'Configurações', tabIcon: Settings },
   ]);
 
   const renderScene = SceneMap({
@@ -42,6 +69,27 @@ export const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
       </View>
     ),
   });
+
+  // Render TabBar com cast explícito para evitar erro de TypeScript
+  const renderTabBar = (props: any) => (
+    <TabBar<DashboardRoute>
+      {...(props)} // cast explícito para "any"
+      scrollEnabled
+      indicatorStyle={{ backgroundColor: '#ef4444' }}
+      style={{ backgroundColor: 'white' }}
+      renderLabel={({ route, focused }: { route: DashboardRoute; focused: boolean }) => {
+        const Icon = route.tabIcon;
+        return (
+          <View style={styles.tabItem}>
+            <Icon size={16} color={focused ? '#ef4444' : '#555'} />
+            <Text style={[styles.tabLabel, focused && { color: '#ef4444' }]}>
+              {route.title}
+            </Text>
+          </View>
+        );
+      }}
+    />
+  );
 
   return (
     <View style={styles.container}>
@@ -62,30 +110,12 @@ export const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
       </View>
 
       {/* Tabs */}
-      <TabView
+      <TabView<DashboardRoute>
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{ width: Dimensions.get('window').width }}
-        renderTabBar={(props) => (
-          <TabBar
-            {...props}
-            scrollEnabled
-            indicatorStyle={{ backgroundColor: '#ef4444' }} // vermelho app-red
-            style={{ backgroundColor: 'white' }}
-            renderLabel={({ route, focused }) => {
-              const Icon = route.icon;
-              return (
-                <View style={styles.tabItem}>
-                  <Icon size={16} color={focused ? '#ef4444' : '#555'} />
-                  <Text style={[styles.tabLabel, focused && { color: '#ef4444' }]}>
-                    {route.title}
-                  </Text>
-                </View>
-              );
-            }}
-          />
-        )}
+        renderTabBar={renderTabBar}
       />
     </View>
   );

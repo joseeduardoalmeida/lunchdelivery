@@ -6,10 +6,10 @@ import Toast from "react-native-toast-message";
 import TooltipProvider from "./src/components/ui/tooltip"; // adapte para RN
 
 import { useAuthRedirectHandler } from "./src/hooks/useAuthRedirectHandler";
-import { AdminInterface } from "./pages/AdminInterface";
-import { AdminLoginPage } from "./pages/AdminLogin";
-import { CustomerInterface } from "./pages/CustomerInterface";
-import { CustomerProfile } from "./pages/CustomerProfile";
+import { AdminInterface } from "./src/screens/AdminInterface";
+import { AdminLoginPage } from "./src/screens/AdminLogin";
+import { CustomerInterface } from "./src/screens/CustomerInterface";
+import { CustomerProfile } from "./src/screens/CustomerProfile";
 import { PasswordReset } from "./pages/PasswordReset";
 import { AuthCallback } from "./pages/AuthCallback";
 import NotFound from "./pages/NotFound";

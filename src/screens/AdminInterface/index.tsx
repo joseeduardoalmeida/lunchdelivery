@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AdminDashboard } from '../../components/admin/AdminDashboard';
-import { AdminLoadingScreen } from '@/components/admin/AdminLoadingScreen';
-import { useAdminAuth } from '@/hooks/useAdminAuth';
+import { AdminLoadingScreen } from '../../components/admin/AdminLoadingScreen';
+import { useAdminAuth } from '../../hooks/useAdminAuth';
 
 export const AdminInterface = () => {
   const navigation = useNavigation();
