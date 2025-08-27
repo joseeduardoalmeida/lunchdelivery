@@ -77,3 +77,11 @@ export interface WeeklyCombo {
   endDate?: string;
   createdAt: Date;
 }
+
+// types.d.ts
+export type RootStackParamList = {
+  Home: undefined;
+  ResetPassword: undefined;
+  AuthCallback: undefined;
+  NotFound: undefined;
+};
