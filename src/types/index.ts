@@ -54,10 +54,10 @@ export interface Order {
   payment_receipt?: string | null;
   raffle_number?: string | null;
   delivery_info?: {
-    customerName: string;
-    customerAddress: string;
-    customerWhatsapp: string;
-    isDelivery: boolean;
+    customerName?: string;
+    customerAddress?: string;
+    customerWhatsapp?: string;
+    isDelivery?: boolean;
     deliveryPersonName?: string;
   };
 }
@@ -84,4 +84,5 @@ export type RootStackParamList = {
   ResetPassword: undefined;
   AuthCallback: undefined;
   NotFound: undefined;
+  OrderSuccess: undefined;
 };

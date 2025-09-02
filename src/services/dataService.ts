@@ -3,6 +3,7 @@ import { MenuItem, Order, OrderItem, Category, WeeklyCombo } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CartItem } from '../types';
+import { orderService } from './orderService';
 
 export const dataService = {
     // --- Menu Items ---
@@ -338,11 +339,16 @@ export const dataService = {
     },
 
     async updateOrderStatus(orderId: string, status: 'preparing' | 'out_for_delivery' | 'completed'): Promise<void> {
-    const { error } = await supabase
-      .from('orders')
-      .update({ status })
-      .eq('id', orderId);
+        const { error } = await supabase
+            .from('orders')
+            .update({ status })
+            .eq('id', orderId);
 
-    if (error) throw error;
-  },
+        if (error) throw error;
+    },
+
+    async updateOrder(orderId: string, updates: Partial<Order>): Promise<void> {
+        return orderService.updateOrder(orderId, updates);
+    }
+
 };

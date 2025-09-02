@@ -13,10 +13,10 @@ import { CustomerProfile } from "./src/screens/CustomerProfile";
 import { PasswordReset } from "./src/screens/PasswordReset";
 import { AuthCallback } from "./src/screens/AuthCallback";
 import NotFound from "./src/screens/NotFound";
-import { DeliveryPage } from "./pages/DeliveryPage";
-import { DeliveryManagement } from "./pages/DeliveryManagement";
-import { DeliverySystem } from "./pages/DeliverySystem";
-import { OrderSuccess } from "./pages/OrderSuccess";
+import { DeliveryPage } from "./src/screens/DeliveryPage";
+import { DeliveryManagement } from "./src/screens/DeliveryManagement";
+import { DeliverySystem } from "./src/screens/DeliverySystem";
+import { OrderSuccess } from "./src/screens/OrderSuccess";
 
 const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient();
@@ -44,12 +44,12 @@ const AppRoutes = () => {
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
+      {/* <TooltipProvider> */}
         <NavigationContainer>
           <AppRoutes />
         </NavigationContainer>
         <Toast />
-      </TooltipProvider>
+      {/* </TooltipProvider> */}
     </QueryClientProvider>
   );
 };
