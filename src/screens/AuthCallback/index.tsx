@@ -15,7 +15,7 @@ export type RootStackParamList = {
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-export function AuthCallback() {
+export const AuthCallback = () => {
   const navigation = useNavigation<NavigationProp>();
   const [debugInfo, setDebugInfo] = useState<string[]>([]);
 
