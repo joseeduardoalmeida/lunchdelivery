@@ -104,6 +104,15 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force "io.coil-kt:coil:2.4.0"
+        force "io.coil-kt:coil-svg:2.4.0"
+    }
+}
+
+
+
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
