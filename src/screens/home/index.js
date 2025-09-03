@@ -43,9 +43,9 @@ const HomeScreen = ({ navigation }) => {
 
         {/* FOOTER */}
         <View style={styles.footer}>
-          <Button size="sm" onPress={() => navigation.navigate("Home")}>
+          {/* <Button size="sm" onPress={() => navigation.navigate("Home")}>
             Voltar
-          </Button>
+          </Button> */}
         </View>
       </View>
     </NativeBaseProvider>
