@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, Image, Alert, TouchableOpacity, ActivityIndicator } from "react-native";
 import { TextInput, Button, Card, Switch } from "react-native-paper";
-import * as ImagePicker from "expo-image-picker";
+import { launchImageLibrary, ImageLibraryOptions, Asset } from 'react-native-image-picker';
 import { dataService } from "../../services/dataService";
 import { supabase } from "../../integrations/supabase/client";
 import { MenuItem, Category } from "../../types";
@@ -45,17 +45,23 @@ export const MenuPanel = () => {
   };
 
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      quality: 0.8,
-    });
-
-    if (!result.canceled) {
-      setImageFile(result.assets[0]);
-    }
+  const options: ImageLibraryOptions = {
+    mediaType: 'photo',
+    includeBase64: false,
+    selectionLimit: 1, // apenas uma imagem
   };
 
+  launchImageLibrary(options, (response) => {
+    if (response.didCancel) {
+      console.log('Usuário cancelou a seleção de imagem');
+    } else if (response.errorCode) {
+      console.log('Erro ao selecionar imagem:', response.errorMessage);
+    } else if (response.assets && response.assets.length > 0) {
+      const asset: Asset = response.assets[0];
+      setImageFile(asset);
+    }
+  });
+};
   const uploadImage = async (file: any): Promise<string> => {
     const fileExt = file.uri.split(".").pop();
     const fileName = `${Math.random()}.${fileExt}`;

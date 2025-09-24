@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  View, 
-  Text, 
-  Switch, 
-  TextInput, 
-  TouchableOpacity, 
-  Image, 
-  ActivityIndicator, 
-  ScrollView, 
-  Alert 
+import {
+  View,
+  Text,
+  Switch,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+  ScrollView,
+  Alert
 } from 'react-native';
-import * as DocumentPicker from 'expo-document-picker';
+import DocumentPicker, { types, DocumentPickerResponse } from 'react-native-document-picker';
 import { supabase } from '../../integrations/supabase/client';
 import { pageSettingsService, HeaderSettings } from '../../services/pageSettingsService';
 
@@ -39,13 +39,23 @@ export const HeaderSettingsPanel = () => {
   };
 
   const pickImage = async () => {
-    const result = await DocumentPicker.getDocumentAsync({
-      type: 'image/*',
-      copyToCacheDirectory: true
-    });
+    try {
+      const res: DocumentPickerResponse[] = await DocumentPicker.pick({
+        type: [types.images], // apenas imagens
+        copyTo: 'cachesDirectory', // opcional: copiar para cache
+      });
 
-    if (!result.canceled) {
-      setImageFile(result.assets[0]);
+      // pega o primeiro arquivo selecionado
+      if (res.length > 0) {
+        setImageFile(res[0]);
+      }
+    } catch (err: any) {
+      if (DocumentPicker.isCancel(err)) {
+        console.log('Usuário cancelou a seleção de arquivo');
+      } else {
+        console.error('Erro ao selecionar arquivo:', err);
+        Alert.alert('Erro', 'Erro ao selecionar arquivo.');
+      }
     }
   };
 

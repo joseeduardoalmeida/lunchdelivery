@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet, Linking } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { supabase } from "../../integrations/supabase/client";
 import { LoadingScreen } from "../../components/customer/LoadingScreen";
-import Linking from 'expo-linking';
 
 // Tipagem das rotas
 export type RootStackParamList = {

@@ -39,6 +39,7 @@ interface AdminDashboardProps {
 
 // Rota customizada
 interface DashboardRoute extends Route {
+  key: string;
   title: string;
   tabIcon: LucideIcon;
 }

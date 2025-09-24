@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, ScrollView, Alert, Image } from "react-native";
 import { TextInput, Button, Card, Text, Switch, Chip } from "react-native-paper";
-import * as ImagePicker from "expo-image-picker";
+import { launchImageLibrary } from "react-native-image-picker";
 import { supabase } from "../../integrations/supabase/client";
 import { dataService } from "../../services/dataService";
 
@@ -86,14 +86,20 @@ export const WeeklyCombosPanel = () => {
   };
 
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      quality: 0.8,
-    });
+    try {
+      const result = await launchImageLibrary({
+        mediaType: 'photo',
+        includeBase64: false,
+        quality: 0.8,
+      });
 
-    if (!result.canceled) {
-      setFormData({ ...formData, image: result.assets[0].uri });
+      if (result.assets && result.assets.length > 0) {
+        const uri = result.assets[0].uri;
+        setFormData({ ...formData, image: uri || "" });
+      }
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível selecionar a imagem.");
+      console.error(error);
     }
   };
 
@@ -246,16 +252,18 @@ export const WeeklyCombosPanel = () => {
                 De R$ {combo.originalPrice.toFixed(2)} por R$ {combo.promotionalPrice.toFixed(2)} (-{combo.discountPercentage}%)
               </Text>
               <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 8 }}>
-                <Button onPress={() => { setIsEditing(true); setEditingCombo(combo); setFormData({
-                  name: combo.name,
-                  description: combo.description,
-                  originalPrice: combo.originalPrice.toString(),
-                  promotionalPrice: combo.promotionalPrice.toString(),
-                  startDate: combo.startDate,
-                  endDate: combo.endDate,
-                  active: combo.active,
-                  image: combo.image || "",
-                }); }}>Editar</Button>
+                <Button onPress={() => {
+                  setIsEditing(true); setEditingCombo(combo); setFormData({
+                    name: combo.name,
+                    description: combo.description,
+                    originalPrice: combo.originalPrice.toString(),
+                    promotionalPrice: combo.promotionalPrice.toString(),
+                    startDate: combo.startDate,
+                    endDate: combo.endDate,
+                    active: combo.active,
+                    image: combo.image || "",
+                  });
+                }}>Editar</Button>
                 <Button onPress={() => deleteCombo(combo.id)} textColor="red">Excluir</Button>
               </View>
             </Card>

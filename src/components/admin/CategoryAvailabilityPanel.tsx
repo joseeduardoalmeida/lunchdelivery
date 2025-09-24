@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Switch, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
 import { categoryAvailabilityService, CategoryAvailability } from '../../services/categoryAvailabilityService';
-import { Ionicons } from '@expo/vector-icons'; // Ícones Expo (ou react-native-vector-icons)
+import Icon from "react-native-vector-icons/MaterialCommunityIcons"; // Ícones Expo (ou react-native-vector-icons)
 
 export const CategoryAvailabilityPanel = () => {
   const [availability, setAvailability] = useState<CategoryAvailability>({
@@ -78,9 +78,9 @@ export const CategoryAvailabilityPanel = () => {
             <Text style={[styles.badge, availability.lanches ? styles.badgeGreen : styles.badgeRed]}>
               {availability.lanches ? 'DISPONÍVEL' : 'INDISPONÍVEL'}
             </Text>
-            <Ionicons
-              name={availability.lanches ? 'checkmark-circle' : 'warning'}
-              size={20}
+            <Icon 
+              name={availability.lanches ? 'checkmark-circle' : 'warning'} 
+              ize={20} 
               color={availability.lanches ? 'green' : 'red'}
             />
           </View>
@@ -98,9 +98,9 @@ export const CategoryAvailabilityPanel = () => {
             <Text style={[styles.badge, availability.pizzas ? styles.badgeGreen : styles.badgeRed]}>
               {availability.pizzas ? 'DISPONÍVEL' : 'INDISPONÍVEL'}
             </Text>
-            <Ionicons
-              name={availability.pizzas ? 'checkmark-circle' : 'warning'}
-              size={20}
+             <Icon 
+              name={availability.pizzas ? 'checkmark-circle' : 'warning'} 
+              ize={20} 
               color={availability.pizzas ? 'green' : 'red'}
             />
           </View>
@@ -142,7 +142,11 @@ export const CategoryAvailabilityPanel = () => {
             {isSaving ? (
               <ActivityIndicator size="small" color="#fff" />
             ) : (
-              <Ionicons name="save" size={16} color="#fff" />
+                <Icon
+                  name="save"
+                  ize={20}
+                  color="#FFF"
+                />
             )}
             <Text style={styles.saveText}>Salvar Alterações</Text>
           </TouchableOpacity>

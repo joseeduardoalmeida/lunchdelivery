@@ -66,3 +66,4 @@ package-lock.json
 
 # testing
 /coverage
+fix-rn.ps1
