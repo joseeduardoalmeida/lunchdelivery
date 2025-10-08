@@ -5,6 +5,7 @@ import { AuthProvider } from './src/settings/AuthContext';
 
 import LoginScreen from './src/screens/login';
 import HomeScreen from './src/screens/home';
+import AboutScreen from './src/screens/about';
 import { NativeBaseProvider } from 'native-base';
 
 // import { enableScreens } from 'react-native-screens';
@@ -23,8 +24,8 @@ const App = () => {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {/* <Stack.Screen name="Login" component={LoginScreen} /> */}
             <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="About" component={AboutScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>
