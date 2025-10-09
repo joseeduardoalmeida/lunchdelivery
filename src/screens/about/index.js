@@ -5,6 +5,7 @@ import { getManufacturer } from "../../components/DeviceInfo";
 import useThemeStore from "../../components/themeStore";
 import { WebView } from "react-native-webview";
 import { useNavigation } from "@react-navigation/native";
+import HeaderBar from "../../components/HeaderBar";
 
 /**
  * 🔧 Como usar
@@ -43,26 +44,11 @@ const AboutScreen = () => {
     <NativeBaseProvider>
       <View style={[styles.container, { backgroundColor: bg }]}> 
         {/* HEADER */}
-        <View style={[styles.header, { backgroundColor: headerBg }]}>
-          <Button
-            size="sm"
-            variant="ghost"
-            _text={{ color: textOnHeader }}
-            isDisabled={canGoBack}
-            onPress={() => navigation.goBack()}
-          >
-            Voltar
-          </Button>
-
-          <HStack alignItems="center" space={2} style={{ flex: 1, justifyContent: "center" }}>
-            <Text fontSize="lg" bold color={textOnHeader}>
-              HubFoody Delivery
-            </Text>
-          </HStack>
-
-          {/* Espaço para balancear o layout */}
-          <View style={{ width: 60 }} />
-        </View>
+        <HeaderBar
+          canGoBack={!canGoBack}
+          onGoBack={() => navigation.goBack()}
+          title="HubFoody Delivery"
+        />
 
         {/* CONTEÚDO */}
         <VStack space={0} flex={1}>
